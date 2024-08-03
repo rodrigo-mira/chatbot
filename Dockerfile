@@ -1,20 +1,23 @@
-ARG PORT=443
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
+# Set the working directory
+WORKDIR /app
 
+# Copy the requirements file into the container
+COPY requirements.txt .
 
-FROM cypress/browsers:latest
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-RUN apt-get install python3 -y
+# Make port 8000 available to the world outside this container
+EXPOSE 8000
 
-RUN echo $(python3 -m site --user-base)
+# Define environment variable
+ENV PATH="/home/root/.local/bin:${PATH}"
 
-COPY requirements.txt  .
-
-ENV PATH /home/root/.local/bin:${PATH}
-
-RUN  apt-get update && apt-get install -y python3-pip && pip install -r requirements.txt  
-
-COPY . .
-
-CMD uvicorn server:app --host 0.0.0.0 --port $PORT
+# Run app.py when the container launches
+CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
