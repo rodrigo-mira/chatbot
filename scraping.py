@@ -10,7 +10,8 @@ def scrape_content(url, element_ids):
         for element_id in element_ids:
             element = soup.find(id=element_id)
             if element:
-                content_dict[element_id] = element.get_text(strip=True)
+                header = "Promptior services:"
+                content_dict[element_id] = f"{header}\n{element.get_text(strip=True)}"
             else:
                 print(f"Element with id '{element_id}' not found.")
                 content_dict[element_id] = None
@@ -20,7 +21,7 @@ def scrape_content(url, element_ids):
         return None
 
 url = 'https://www.promtior.ai/service'
-element_ids = [ "comp-ly0nzysz", "comp-lyarslb1", 'tab-comp-ly34jriv', 'comp-ly34jrix', 'tab-comp-lyaruxg2',"comp-lyaruxgh1", 'tab-comp-lyaruxg2', 'tab-comp-lyarx6ta',"comp-lyarx6uq", 'tab-comp-lyp0hhv4',"comp-lyp0hhve" ]
+element_ids = [ "comp-lxxlqe03", "comp-lxxlqe05", "comp-ly0nzysz", "comp-lyarslb1", 'tab-comp-ly34jriv', 'comp-ly34jrix', 'tab-comp-lyaruxg2',"comp-lyaruxgh1", 'tab-comp-lyaruxg2', 'tab-comp-lyarx6ta',"comp-lyarx6uq", 'tab-comp-lyp0hhv4',"comp-lyp0hhve" ]
 content_dict = scrape_content(url, element_ids)
 
 if content_dict:
